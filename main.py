@@ -1,33 +1,19 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 from flask import Flask, request, jsonify
 import torch
 import torch.nn.functional as F
 from facenet_pytorch import MTCNN, InceptionResnetV1
-import cv2
 import numpy as np
 from PIL import Image
-
-
-from flask import Flask, request, jsonify
-from selenium import webdriver
-import time
 import os
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from pytube import YouTube
-from io import BytesIO
 import cv2
-import numpy as np
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from flask import Flask, request, jsonify
 from flask_cors import CORS
+import shutil
+
 
 app = Flask(__name__)
 CORS(app)
@@ -91,8 +77,14 @@ def take_screenshots(video_url):
 
 
     
+def delete_directory_contents(directory):
+    try:
+        # Șterge directorul și tot conținutul său recursiv
+        shutil.rmtree(directory)
+        print(f"Contents of directory '{directory}' have been deleted successfully.")
+    except Exception as e:
+        print(f"Failed to delete contents of directory '{directory}'. Reason: {e}")
 
-import os
 
 def predict_frames(frames_dir):
     fake_frames = 0
@@ -157,7 +149,7 @@ def predict():
 
         # Predict frames
     fake_percentage, real_percentage, percentage = predict_frames(screenshots_dir)
-
+    delete_directory_contents("screenshots")
     return jsonify({
         'success': 'Screenshots taken successfully',
         'fake_percentage': fake_percentage,
