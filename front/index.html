@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Document</title>
+  </head>
+  <style>
+    div {
+      width: 300px;
+      height: 170px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button-wrapper {
+      width: 80%;
+      height: 50px;
+    }
+
+    button {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background-color: blue;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 20px;
+    }
+  </style>
+  <body>
+    <div>
+      <div class="button-wrapper">
+        <button id="verifyButton">Verify deepfake video</button>
+      </div>
+    </div>
+
+    <script src="script.js" nonce="your-unique-nonce"></script>
+  </body>
+</html>
