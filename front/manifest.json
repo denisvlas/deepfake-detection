@@ -1,5 +1,5 @@
 {
-    "name": "MDL",
+    "name": "DeepDetect",
     "version": "1.0.0",
     "description": "Deepfake detection plugin",
     "manifest_version": 3,
