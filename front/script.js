@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
     btn.addEventListener("click", function () {
         var waitingMessage = document.createElement("h1");
-        waitingMessage.textContent = "Așteptare...";
+        waitingMessage.textContent = "Wating...";
         document.getElementsByClassName("button-wrapper")[0].appendChild(waitingMessage); // Afișați mesajul de așteptare
         document.getElementsByClassName("button-wrapper")[0].removeChild(btn); // Afișați mesajul de așteptare
 
@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);9
+                console.log(data);
                 // După ce primiți răspunsul de la server, actualizați mesajul de așteptare cu rezultatul
-                waitingMessage.innerHTML = data.percentage.toFixed(2) + "<br>" + data.final_prediction})
+                waitingMessage.innerHTML = "Fake: " + data.percentage.toFixed(2) + "%"})
                 // waitingMessage.innerHTML = "Real Percentage: " + data.real_percentage.toFixed(2) + "<br>" + 
                 // "Fake percentage:" + data.fake_percentage.toFixed(2) + "<br>" + 
                 // "Deepfake prediction: " + data.final_prediction;})
