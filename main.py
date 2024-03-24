@@ -39,7 +39,7 @@ model.load_state_dict(checkpoint['model_state_dict'])
 model.to(DEVICE).eval()
 
 
-def extract_frames_from_youtube(youtube_link, frame_skip=1):
+def extract_frames_from_youtube(youtube_link, frame_skip=5):
     yt = YouTube(youtube_link)
     stream = yt.streams.filter(file_extension="mp4").first()
     video = cv2.VideoCapture(stream.url)

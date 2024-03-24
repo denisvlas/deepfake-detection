@@ -25,8 +25,10 @@ app = Flask(__name__)
 CORS(app)
 
 
-test_x = ["https://www.youtube.com/watch?v=cusQfJKn8c0", "https://www.youtube.com/watch?v=17e_J39tDmk", "https://www.youtube.com/watch?v=HhMPSuZgJsc", "https://www.youtube.com/watch?v=XuKUkyPegBE", "https://www.youtube.com/watch?v=sbFHhpYU15w", "https://www.youtube.com/watch?v=dRMS-WD6bqI", "https://www.youtube.com/shorts/h0X1miHVoRo", "https://www.youtube.com/shorts/uv3JPb0BNNM", "https://www.youtube.com/watch?v=oqpfgUQET6A", "https://www.youtube.com/watch?v=sbFHhpYU15w"]
-test_true_y = ["real", "fake", "fake", "fake", "fake", "real", "real", "real", "real", "fake"]
+test_x=["https://www.youtube.com/watch?v=HhMPSuZgJsc","https://www.youtube.com/watch?v=XuKUkyPegBE","https://www.youtube.com/watch?v=sbFHhpYU15w","https://www.youtube.com/watch?v=Xe1_L-a-nSI","https://www.youtube.com/watch?v=iTkhB4VTm1E","https://www.youtube.com/watch?v=X17yrEV5sl4","https://www.youtube.com/watch?v=on7wVajA9Qs","https://www.youtube.com/watch?v=yVEhrIMc-ps",
+        "https://www.youtube.com/watch?v=dRMS-WD6bqI","https://www.youtube.com/watch?v=6RFqhJ7AURI","https://www.youtube.com/watch?v=slZcS9eE_9I","https://www.youtube.com/watch?v=jrd-acToTsE","https://www.youtube.com/watch?v=yQeQ5kHehXA","https://www.youtube.com/watch?v=CXMgfZEP2cA","https://www.youtube.com/watch?v=oqpfgUQET6A","https://www.youtube.com/watch?v=dRMS-WD6bqI","https://www.youtube.com/watch?v=ZZVwvXPlH78","https://www.youtube.com/watch?v=MiJ-fvP55bo","https://www.youtube.com/watch?v=yxfm4bYkHd8"
+        ]
+test_true_y = ["fake","fake","fake","fake","fake","fake","fake","fake","real","real","real","real","real","real","real","real","real","real","real"]
 
 test_pred_y = []
 
@@ -59,7 +61,7 @@ model.load_state_dict(checkpoint['model_state_dict'])
 model.to(DEVICE).eval()
 
 
-def extract_frames_from_youtube(youtube_link, frame_skip=1):
+def extract_frames_from_youtube(youtube_link, frame_skip=5):
     yt = YouTube(youtube_link)
     stream = yt.streams.filter(file_extension="mp4").first()
     video = cv2.VideoCapture(stream.url)
@@ -107,17 +109,15 @@ def predict_video(test_x):
     # Extrage cadrele din videoclipul YouTube
     for i in range(len(test_x)):
         frames = extract_frames_from_youtube(test_x[i])
-
+        print("video",i+1/len(test_x))
 # Inițializați contoarele pentru cadrele reale și false
         fake_frames = 0
         real_frames = 0
         percentage = 0
-        frame_counter=0
         # Parcurgeți fiecare cadru și aplicați logica de detectare și analiză a feței
         for frame in frames:
             # Convertiți cadru la imagine PIL
             input_image = Image.fromarray(frame)
-            frame_counter+=1
             # Detectați fața
             face = mtcnn(input_image)
             if face is not None:
@@ -137,7 +137,6 @@ def predict_video(test_x):
                         real_frames += 1
                     else:
                         fake_frames += 1
-                    print(len(frames),"/",frame_counter)
         # Calculați procentajele și procentajul mediu de "falsitate"
         total_frames = fake_frames + real_frames
         fake_percentage = (fake_frames / total_frames) * 100
