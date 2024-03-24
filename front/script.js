@@ -23,11 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                console.log(data);9
                 // După ce primiți răspunsul de la server, actualizați mesajul de așteptare cu rezultatul
-                waitingMessage.textContent = "Deepfake prediction: " + data.average_percentage.toFixed(2) + "%";
-            })
-            .catch((error) => {
+                waitingMessage.innerHTML = data.percentage.toFixed(2) + "<br>" + data.final_prediction})
+                // waitingMessage.innerHTML = "Real Percentage: " + data.real_percentage.toFixed(2) + "<br>" + 
+                // "Fake percentage:" + data.fake_percentage.toFixed(2) + "<br>" + 
+                // "Deepfake prediction: " + data.final_prediction;})
+                .catch((error) => {
                 // În caz de eroare, actualizați mesajul de așteptare cu mesajul de eroare
                 waitingMessage.textContent = error;
             });
